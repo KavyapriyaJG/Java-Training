@@ -1,82 +1,40 @@
-import java.util.Arrays;
+import java.util.Scanner;
+
 public class ProblemSolving {
+	// PRIME NUMBERS
+	public static void getPrimeNumbers(int start, int end) {
+		boolean prime[] = new boolean[end + 1];
 
-	//RETURN PRIME NUMBERS
-	public static int[] primeNumbers(int min, int max) {
-		int i,j,flag,k=0;
-		int prime[] = new int[max-min+1];
-		for(i=min;i<=max;i++) {
-			flag = 0;
-			for(j=2;j<=i/2;j++) {
-				if(i%j==0){
-					flag=1;
-					break;
-				}
+		// To skip 1 which is neither a prime nor a composite number
+		if (start == 1)
+			start = start + 1;
+
+		for (int i = start; i <= end; i++)
+			prime[i] = true;
+
+		for (int p = 2; p * p <= end; p++) {
+			if (prime[p] == true) {
+				for (int i = p * p; i <= end; i += p)
+					prime[i] = false;
 			}
-			if(flag==0)
-				prime[k++] = i;
 		}
-		return Arrays.copyOfRange(prime,0,k);
+
+		// Print all prime numbers
+		for (int i = start; i <= end; i++)
+			if (prime[i] == true)
+				System.out.print(i + " ");
+
 	}
 
-	//ARMSTRONG NUMBER
-	public static boolean isArmstrong(int num) {
-		int armstrong=0, element = num;
-		
-		while(element>0) {
-			armstrong+=(int)Math.pow((element%10), 3);
-			element/=10;
-		}
-		return (armstrong==num);
-	}
-	//PALINDROME NUMBER
-	public static boolean isPalindrome(int num) {
-		int palindrome=0, element =num;
-		while(element>0) {
-			palindrome= (palindrome*10)+ (element%10);
-			element/=10;
-		}
-		return (palindrome==num);
-	}
-	//PERFECT NUMBER
-	public static boolean isPerfect(int num) {
-		int perfect=1, i;
-		for(i=2;i<=num/2;i++)
-			if(num%i==0)
-				perfect+=i;
-		return (perfect==num);
-	}
-	
-	public static void identifyTypeOfTheNumber(int num) {
-		boolean armstrong = isArmstrong(num);
-		boolean palindrome = isPalindrome(num);
-		boolean perfect = isPerfect(num);
-		
-		System.out.println("The given number is a ");
-		
-		if(armstrong || palindrome || perfect) {
-			if(armstrong) System.out.println("Armstrong number");
-			if(palindrome) System.out.println("Palindrome number");
-			if(perfect) System.out.println("Perfect number");
-		}
-		else 
-			System.out.println("Normal number");
-	}
-	
-	
 	public static void main(String[] args) {
-		//PRIME NUMBERS
-		int start = 1, end=100;
-		int ansArray[] = primeNumbers(start,end);
-		for(int ele: ansArray) {
-			System.out.print(ele+" ");
-		}
-		System.out.println();
-		
-		//IDENTIFY TYPE OF NUMBER
-		int num = 6;
-		identifyTypeOfTheNumber(num);
-		
-	}
+		Scanner scanner = new Scanner(System.in);
+		int start, end;
+		System.out.print("Enter start and end range : ");
+		start = scanner.nextInt();
+		end = scanner.nextInt();
 
+		// PRIME NUMBERS
+		getPrimeNumbers(start, end);
+
+	}
 }

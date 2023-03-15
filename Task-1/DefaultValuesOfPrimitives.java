@@ -1,27 +1,23 @@
-
 public class DefaultValuesOfPrimitives {
 
-	boolean bl;
-	byte by;
-	char c;
-	int i;
-	float f;
-	double d;
-	short s;
-	long l;
-	
-	DefaultValuesOfPrimitives(){
-		{
-			System.out.println("Cons of class called..");
-		}
-		
+	static boolean booleanMember;
+	static byte byteMember;
+	static char characterMember;
+	static int intMember;
+	static float floatMember;
+	static double doubleMember;
+	static short shortMember;
+	static long longMember;
+
+	DefaultValuesOfPrimitives() {
+		System.out.println("Cons of class called..");
+
 	}
 
 	public static void main(String[] args) {
-		
-		DefaultValuesOfPrimitives objRef = new DefaultValuesOfPrimitives();
-		
-		System.out.println(objRef.bl+" "+objRef.by+" "+objRef.c+" "+objRef.i+" "+objRef.f+" "+objRef.d+" "+objRef.s+" "+objRef.l);
+
+		System.out.println(booleanMember + " " + byteMember + " -" + characterMember + "- " + intMember);
+		System.out.println(floatMember + " " + doubleMember + " " + shortMember + " " + longMember);
 
 	}
 
