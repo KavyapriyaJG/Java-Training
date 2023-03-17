@@ -24,7 +24,3 @@ public class Day2__10__ClassesExperiment {
 	}
 
 }
-
-/*
- * Order of execution 1. Static block 2. Static properties 3. Properties 4. Super class cons-super(); 5. The class's constructor
- */
