@@ -1,12 +1,10 @@
 import java.util.Scanner;
 
 public class Day1__15__a_ProblemSolving {
-	public static void getPrimeNumbers(int start, int end) {
-		boolean prime[] = new boolean[end + 1];
+	public static void printPrimeNumbers(int start, int end) {
+		boolean prime[] = new boolean[end + 1-start];
 
-		// To skip 1 which is neither a prime nor a composite number
-		if (start == 1)
-			start = start + 1;
+		prime[0]=false;
 
 		for (int i = start; i <= end; i++)
 			prime[i] = true;
@@ -31,7 +29,7 @@ public class Day1__15__a_ProblemSolving {
 		start = scanner.nextInt();
 		end = scanner.nextInt();
 
-		getPrimeNumbers(start, end);
+		printPrimeNumbers(start, end);
 
 	}
 }
