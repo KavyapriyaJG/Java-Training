@@ -2,11 +2,9 @@ import java.util.Scanner;
 
 public class Day1__15__a_ProblemSolving {
 	public static void printPrimeNumbers(int start, int end) {
-		boolean prime[] = new boolean[end + 1-start];
+		boolean prime[] = new boolean[end + 1];
 
-		prime[0]=false;
-
-		for (int i = start; i <= end; i++)
+		for (int i = 2; i <= end; i++)
 			prime[i] = true;
 
 		for (int p = 2; p * p <= end; p++) {
