@@ -30,16 +30,15 @@ public class __9__NumberFormatEx2 {
 		Scanner scanner = new Scanner(System.in);
 
 		int numb,index,sum,students=10;
-		int marks[] = new int[3];
+		int marks;
 		
-		while(students-- >0) {
-			System.out.println("Enter the 3 subject marks of Student "+ (10-students));
 			index=0; sum=0;
-			while(index<3) {
+			while(index<students) {
 				try {
-					marks[index] =Integer.parseInt(scanner.next());
-					checkRange(marks[index]);
-					sum+=marks[index]; 
+					System.out.println("Enter the marks of the student-"+(index+1)+" : ");
+					marks =Integer.parseInt(scanner.next());
+					checkRange(marks);
+					sum+=marks; 
 					index++; 
 				}
 				catch(NumberFormatException e) {
@@ -50,8 +49,8 @@ public class __9__NumberFormatEx2 {
 				}
 				
 			}
-			System.out.println("Average is : "+ (sum/3));
-		}
+			System.out.println("Average is : "+ (sum/students));
+		
 		
 	}
 }
