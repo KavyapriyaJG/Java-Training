@@ -4,12 +4,12 @@ import java.util.concurrent.Executors;
 class MessageFormatter{
 	
 	public void format(String message) {
-			try { System.out.println(Thread.currentThread().getName()); Thread.sleep(1000); } catch(Exception e) { }
+			try { System.out.println(Thread.currentThread().getName()); Thread.sleep(1000); } catch(Exception e) { System.out.println(e); }
 			
 			for(int i=0;i<5;i++)
 				System.out.println("[------"+message+"------]");
 			
-			try { System.out.println("--"+Thread.currentThread().getName()); Thread.sleep(1000); } catch(Exception e) { }
+			try { System.out.println("--"+Thread.currentThread().getName()); Thread.sleep(1000); } catch(Exception e) { System.out.println(e); }
 	}
 	
 }

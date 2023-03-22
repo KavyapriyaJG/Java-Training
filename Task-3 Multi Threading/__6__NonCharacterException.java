@@ -23,7 +23,7 @@ class CharacterThread extends Thread {
 				System.out.println(input);
 			}
 		} catch (NonCharacterException nce) {
-			nce.printStackTrace();
+			System.out.println(nce);
 			new Handler().handle();
 		}
 	}
@@ -38,7 +38,7 @@ public class __6__NonCharacterException {
 		
 		int length = input.length();
 		for (int index = 0; index < length; index++) {
-			characterThread.run(input.charAt(index));
+			characterThread.run((char)input.charAt(index));
 		}
 		
 		scanner.close();
