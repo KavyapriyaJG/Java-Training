@@ -1,39 +1,66 @@
 package momento;
-//Problem: undo operation without breaking encapsulation
-//Solution: While adding new States, maintain a list of memento in a caretaker - only accessible to that caretaker. Is not visible to orignator.
+import java.util.Stack;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
+/**
+ * Notes App that creates notes, deletes notes, displays notes and stores them
+ * @author Kavyapriya
+ */
 public class NotesApp {
-	private List<Memento> notesApp = new ArrayList<>();
+	private Stack<Memento> notesApp = new Stack<>();
 
-	public List<Memento> getAllNotes() {
+	/**
+	 * Gets all notes
+	 * @return memento of notes
+	 */
+	public Stack<Memento> getAllNotes() {
 		return this.notesApp;
 	}
 
+	/**
+	 * Creates a new note
+	 * @param noteContent Text content of a note
+	 */
 	public void createNote(String noteContent) {
-		(this.notesApp).add(new Memento().setMemento(noteContent));
+		(this.notesApp).push(new Memento().setMemento(noteContent));
 	}
 
+	/**
+	 * Deletes the latest note
+	 * @return The deleted note
+	 */
 	public Memento deleteNote() {
-		Memento lastNote = (this.notesApp).get((this.notesApp).size() - 1);
-		(this.notesApp).remove((this.notesApp).size() - 1);
+		if(this.notesApp.size()>0) {
+			Memento lastNote = (this.notesApp).get((this.notesApp).size() - 1);
+			(this.notesApp).pop();
+			return lastNote;
+		}else {
+			System.out.println("No more notes !..");
+			return null;
+		}
 
-		return lastNote;
 	}
 	
+	/**
+	 * Displays all notes
+	 */
 	public void displayAllNotes() {
-		System.out.println("---------Notes App----------");
-		for(Memento note: notesApp) {
-			System.out.println(note.getMementoContent()+" ");
+		System.out.println("\n---------Notes App----------");
+		if(this.notesApp.size()>0) {
+			for(Memento note: notesApp) 
+				System.out.println(note.getMementoContent()+" ");
+		}else {
+			System.out.println("Nothing to display !..");
 		}
 	}
 	
+	/**
+	 * Inner class which stores the notes
+	 * @author Kavyapriya
+	 *
+	 */
 	class Memento {
 		private String note;
-
+		
 		public Memento setMemento(String note) {
 			this.note = note;
 			return this;

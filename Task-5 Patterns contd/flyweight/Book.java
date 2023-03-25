@@ -1,5 +1,9 @@
 package flyweight;
 
+/**
+ * Book which has details like ISBN, title, price, bookGenre
+ * @author Kavyapriya
+ */
 public class Book {
 	public String ISBN;
 	public String title;

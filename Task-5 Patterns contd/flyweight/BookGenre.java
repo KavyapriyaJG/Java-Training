@@ -1,5 +1,9 @@
 package flyweight;
 
+/**
+ * Flyweight structural component that stores the books genre and related recurring details 
+ * @author Kavyapriya
+ */
 public class BookGenre {
 	private String genre;
 	private String publicationHouse;

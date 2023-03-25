@@ -1,12 +1,17 @@
 package flyweight;
-//Scenario : In a large collection of objects, majority of their states are the same
-//Optimization : Grouping and storing the intrinsic states in a map as a flyweight. In concrete objects, only reference to intrinsic, saving space
+
+/**
+ * Scenario : In a large collection of objects, majority of their states are the same. 
+ * Optimization : Grouping and storing the intrinsic states in a map as a flyweight. In concrete objects, only reference to intrinsic, saving space
+ * @author Kavyapriya
+ */
 public class UI {
 
     public static void main(String[] args) {
 
         BookStore store = new BookStore();
         
+        //Create books and put them in store
         store.storeBook("12039S", "Book1", 290.00f, "Action", "Sirius Publication House", "Timothee and Co.");
         store.storeBook("12309D", "Book2", 3500.00f, "Fantasy", "Dream Warrior Publication House", "Brothers Union"); 
         store.storeBook("52091F", "Book3", 799.00f, "Fantasy", "Dream Warrior Publication House", "Brothers Union");     

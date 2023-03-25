@@ -1,10 +1,19 @@
 package bridge;
 
+/**
+ * interface NEET course that has abstract methods like issueBooks and getMethodOfTeaching
+ * @author Kavyapriya
+ */
 interface NEETCourse {
-	public abstract void issueBooks();
-	public abstract void getMethodOfTeaching();
+	void issueBooks();
+	void getMethodOfTeaching();
 }
 
+/**
+ * Regulars class that implements NEETCourse
+ * @author Kavyapriya
+ *
+ */
 class Regulars implements NEETCourse{
 	@Override
 	public void issueBooks() {
@@ -16,6 +25,11 @@ class Regulars implements NEETCourse{
 	}
 }
 
+/**
+ * Repeaters class that implements NEETCourse
+ * @author Kavyapriya
+ *
+ */
 class Repeaters implements NEETCourse{
 	@Override
 	public void issueBooks() {

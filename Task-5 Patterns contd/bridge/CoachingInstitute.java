@@ -1,4 +1,9 @@
 package bridge;
+/**
+ * Coaching Institue abstract class that has some state variables and abstract methods like getTutored and getTested
+ * @author Kavyapriya
+ *
+ */
 public abstract class CoachingInstitute {
 	String id;
 	String institute_name;
@@ -15,6 +20,11 @@ public abstract class CoachingInstitute {
 	public abstract void getTested();
 }
 
+/**
+ * Kota class extends the Coaching Institute abstract class
+ * @author Kavyapriya
+ *
+ */
 class Kota extends CoachingInstitute{
 
 	public Kota(NEETCourse course) {
@@ -32,6 +42,12 @@ class Kota extends CoachingInstitute{
 	}
 	
 }
+
+/**
+ * GreenPark class extends the Coaching Institute abstract class
+ * @author Kavyapriya
+ *
+ */
 class GreenPark extends CoachingInstitute{
 	public GreenPark(NEETCourse course) {
 		super(course);
