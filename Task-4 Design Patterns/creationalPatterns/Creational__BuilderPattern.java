@@ -1,4 +1,6 @@
 package creationalPatterns;
+//Problem : An application might need a mechanism for building complex objects that is independent from the ones that make up the object.
+//Solution : Define an instance for creating an object but letting subclasses decide which class to instantiate
 
 class House {
 	BedRoom bedroom;
@@ -26,7 +28,7 @@ class House {
 			return this;
 		}
 
-		public BuildHouse buildBedRoom(Hall hall) {
+		public BuildHouse buildHall(Hall hall) {
 			this.hall = hall;
 			return this;
 		}
@@ -58,7 +60,7 @@ class Hall {
 
 public class Creational__BuilderPattern {
 	public static void main(String[] args) {
-		House ishwaryam = new House.BuildHouse().buildBedRoom(new BedRoom()).buildKitchen(new Kitchen()).buildHouse();
+		House ishwaryam = new House.BuildHouse().buildBedRoom(new BedRoom()).buildHouse();
 
 		System.out.println(ishwaryam);
 	}

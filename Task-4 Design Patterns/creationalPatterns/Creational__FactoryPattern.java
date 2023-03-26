@@ -1,6 +1,8 @@
 package creationalPatterns;
+//Problem :  when an object needs to be created, but the class does not know what kind of object it should create
+//Solution: Define an interface for creating objects, but let subclasses to decide which class to instantiate 
+
 interface Manufacturer{
-	
 }
 class PhoneManufacturer implements Manufacturer{
 	private OSFactory osFactory;
@@ -45,14 +47,24 @@ class iOS extends OS{ }
 class AndroidOS extends OS{ }
 class WindowsOS extends OS{ }
 
-//Phone Factory
+class PoorvikaContainer{
+	public static PhoneManufacturer getPhone() throws Exception{
+		
+		PhoneManufacturer manufacturer= new PhoneManufacturer();
+		OSFactory osFactory = new iOSFactory();
+		//dependency injection
+		manufacturer.setOSFactory(osFactory);
+		
+		return manufacturer;
+	}
+}
+
 public class Creational__FactoryPattern {
 	public static void main(String[] args) throws Exception{
-		PhoneManufacturer redmi = new PhoneManufacturer();
-		OSFactory google = new AndroidOSFactory();
-		redmi.setOSFactory(google);
-		OS os = redmi.getOS();
-		System.out.println(os);
+		
+		PhoneManufacturer redmi = PoorvikaContainer.getPhone();
+		
+		System.out.println(redmi.getOS());
 		
 		
 	}

@@ -1,4 +1,7 @@
 package behaviouralPatterns;
+//Scenario : Complex Implementation details and objects are visible
+//Solution : encapsulate a complex implementations as a request in an object, allow saving the requests in a queue for quick access
+
 abstract class Command{
 	public abstract void execute();
 }
@@ -108,6 +111,7 @@ public class Behavioural__CommandPattern {
 		
 		GenieRemote maid = new GenieRemote();
 		maid.setRemote(1,new VRGameCommand(new SetupBox(), new TV(), new Remote(), new VRGame()));
+		maid.setRemote(2,new NewsCommand(new SetupBox(), new TV(), new Remote(), new Channel()));
 		
 		maid.remoteFunction(1);
 	}

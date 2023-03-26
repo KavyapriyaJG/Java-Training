@@ -1,10 +1,10 @@
 package behaviouralPatterns;
-//separate operational functionalities from a class. new visitors can be added in future
-//Visitor lets you define a new operation without changing the classes of the elements on which it operates.
+//Problem : separate operational functionalities from a class
+//Solution: define a new operation without changing the classes of the elements on which it operates. new visitor functions can be added in future
 
 import java.util.Scanner;
 
-class Human{
+abstract class Human{
 	String name;
 	String address;
 	int age;
@@ -25,7 +25,6 @@ class Tenant extends Human{
 	
 	public void visit(bankTransaction bt) {
 		bt.pay(this.rent, this);
-		new CurrentBalance(this).showBalance();
 	}
 
 }
@@ -37,34 +36,42 @@ class Parent extends Human{
 	}
 	public void visit(bankTransaction bt) {
 		bt.pay(this.schoolFee, this);
+	}
+	
+}
+class Pensioner extends Human{
+	float pension;
+	public Pensioner(String name, String address, int age, float salary, float pension) {
+		super(name, address, age, salary);
+		this.pension = pension;
+	}
+	public void visit(bankTransaction bt) {
+		bt.pay(this.pension, this);
 		new CurrentBalance(this).showBalance();
 	}
 	
 }
 interface bankTransaction{
-	public abstract void pay(float amount, Human man);
+	public abstract void pay(float amount, Parent man);
+	public abstract void pay(float amount, Tenant man);
+	public abstract void pay(float amount, Pensioner man);
+	
 }
-class TransactRent implements bankTransaction{
-	@Override
-	public void pay(float amount, Human man) {
+class Transact implements bankTransaction{
+	public void pay(float amount, Parent man) {
 		man.salary-=amount;
 		System.out.println("Rent payed to house owner : "+ amount);
 	}
-}
-class TransactSchoolFee implements bankTransaction{
-	@Override
-	public void pay(float amount, Human man) {
+	public void pay(float amount, Tenant man) {
 		man.salary-=amount;
 		System.out.println("Annual school fee paid : "+ amount);
 	}
-}
-class SaveInBank implements bankTransaction{
-	@Override
-	public void pay(float amount, Human man) {
-		man.salary-=amount;
+	public void pay(float amount, Pensioner man) {
+		man.salary+=amount;
 		System.out.println("Money added to bank: "+ amount);
 	}
 }
+
 class CurrentBalance{
 	Human citizen;
 	public CurrentBalance(Human citizen) {
@@ -78,10 +85,7 @@ public class Behavioural__VisitorPattern {
 	public static void main(String[] args) throws Exception{
 		Scanner scanner = new Scanner(System.in);
 		Parent govind = new Parent("Govindarajan","Porur, Chennai", 60, 80_000, 50_000);
-//		System.out.println("Choose among the following: TransactRent | TransactSchoolFee | SaveInBank");
-//		String transactionOption = scanner.next();
-//		bankTransaction amount = (bankTransaction)Class.forName(transactionOption).getConstructor().newInstance();
-		bankTransaction amount = new TransactSchoolFee();
+		bankTransaction amount = new Transact();
 		govind.visit(amount);
 		
 		scanner.close();

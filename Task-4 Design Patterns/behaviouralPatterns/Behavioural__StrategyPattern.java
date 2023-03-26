@@ -1,11 +1,22 @@
 package behaviouralPatterns;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Scanner;
+//Problem : classes differ only in their behavior
+//Solution : Define a family of algorithms, encapsulate each one, and make them interchangeable
 
-abstract class Developer{
-	public abstract void techStack();
+class Fresher{
+	private Developer role;
+	
+	public void setFresherRole(Developer role) {
+		this.role = role;
+	}
+	public Developer getFresherRole() {
+		return role;
+	}
 }
-class FrontendDev extends Developer{
+
+interface Developer{
+	void techStack();
+}
+class FrontendDev implements Developer{
 	@Override
 	public void techStack() {
 		System.out.println("HTML, CSS, Js, ReactJs");
@@ -15,7 +26,7 @@ class FrontendDev extends Developer{
 	}
 	
 }
-class BackendDev extends Developer{
+class BackendDev implements Developer{
 	@Override
 	public void techStack() {
 		System.out.println("Java, SpringBoot, NodeJS, SQL ...");
@@ -25,22 +36,13 @@ class BackendDev extends Developer{
 	}
 }
 
-class Fresher{
-	Developer candidate;
-	public Developer hireFresher() {
-		return candidate;
-	}
-}
+
 
 public class Behavioural__StrategyPattern {
 	public static void main(String[] args) throws Exception{
-			Scanner scanner = new Scanner(System.in);
-			Fresher ace = new Fresher();
-			System.out.print("Enter your role: ");
-			String role = scanner.next();
-			ace.candidate = (Developer)Class.forName(role).newInstance();
+			Fresher ace = new Fresher();	
+			ace.setFresherRole(new BackendDev());
 			
-			ace.hireFresher().techStack();
-			scanner.close();
+			ace.getFresherRole().techStack();
 	}
 }

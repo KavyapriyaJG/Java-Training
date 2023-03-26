@@ -1,10 +1,14 @@
 package creationalPatterns;
+//Problem : Multiple points of access for an object could cause inconsistency
+//Solution : provide instantiation only once
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 class Electricity {
 	private static Electricity instance;
 	String electricalAppliance;
+	
 	private Electricity() {
 		System.out.println("Electricity connection created..");
 	}
