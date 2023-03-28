@@ -7,6 +7,7 @@ import java.util.Stack;
  */
 public class NotesApp {
 	private Stack<Memento> notesApp = new Stack<>();
+	private Memento latestDelete;
 
 	/**
 	 * Gets all notes
@@ -25,20 +26,18 @@ public class NotesApp {
 	}
 
 	/**
-	 * Deletes the latest note
-	 * @return The deleted note
+	 * Deletes the latest note and stores the latesetDeleted note for any redo functions in future
 	 */
-	public Memento deleteNote() {
-		if(this.notesApp.size()>0) {
-			Memento lastNote = (this.notesApp).get((this.notesApp).size() - 1);
-			(this.notesApp).pop();
-			return lastNote;
-		}else {
-			System.out.println("No more notes !..");
-			return null;
+	public void deleteNote() {
+		try {
+			if((this.notesApp).size()==0)
+				throw new Exception();
+			latestDelete = (this.notesApp).pop();
+		}catch (Exception e) {
+			System.out.println("No more notes to display !.. ");
 		}
-
 	}
+	
 	
 	/**
 	 * Displays all notes
