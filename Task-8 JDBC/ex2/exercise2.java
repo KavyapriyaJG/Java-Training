@@ -23,14 +23,6 @@ public class exercise2 {
 	 * @param args not used
 	 */
 	public static void main(String args[]) {
-		Connection connection = null;
-		Statement statement;
-		PreparedStatement updateSales, updateTotal;
-		String tableName = "COFFEE";
-		
-		String updateString = "update "+ tableName +" set WEEKLY_SALES = ? where COFFEE_NAME like ?";
-		String updateStatement = "update "+ tableName +" set TOTAL_SALES = TOTAL_SALES + ? where COFFEE_NAME like ?";
-		String query = "select * from "+ tableName;
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -38,12 +30,12 @@ public class exercise2 {
 			System.out.print("ClassNotFoundException: ");
 			System.out.println(e.getMessage());
 		}
-		try {
+		Connection connection = null;
+		String tableName = "COFFEE";
+		
+		try{
 			connection = DriverManager.getConnection("jdbc:mysql://localhost/acedb", "root", "1234567890");
 
-			updateSales = connection.prepareStatement(updateString);
-			updateTotal = connection.prepareStatement(updateStatement);
-			
 			HashMap<String, Integer> map = new HashMap<>();
 			map.put("Colombian", 1);
 			map.put("French_Roast", 1);
@@ -51,31 +43,40 @@ public class exercise2 {
 			map.put("Colombian_Decaf", 1);
 			map.put("French_Roast_Decaf", 1);
 
-			connection.setAutoCommit(false);	
-			for (String coffee : map.keySet()) {
-				updateSales.setInt(1, map.get(coffee));
-				updateSales.setString(2, coffee);
-				updateSales.executeUpdate();
-				
-				updateTotal.setInt(1, map.get(coffee));
-				updateTotal.setString(2, coffee);
-				updateTotal.executeUpdate();
-
-				connection.commit();
+			connection.setAutoCommit(false);
+			
+			try( PreparedStatement updateSales = connection.prepareStatement("update "+ tableName +" set WEEKLY_SALES = ? where COFFEE_NAME like ?");
+					PreparedStatement updateTotal = connection.prepareStatement("update "+ tableName +" set TOTAL_SALES = TOTAL_SALES + ? where COFFEE_NAME like ?");
+				){
+				for(String coffee : map.keySet()) {
+					updateSales.setInt(1, map.get(coffee));
+					updateSales.setString(2, coffee);
+					updateSales.executeUpdate();
+					
+					updateTotal.setInt(1, map.get(coffee));
+					updateTotal.setString(2, coffee);
+					updateTotal.executeUpdate();
+	
+					connection.commit();
+				}
+			}catch(Exception e) {
+				System.out.println(e);
 			}
-			updateSales.close();
-			updateTotal.close();
 			connection.setAutoCommit(true);
 
-			statement = connection.createStatement();
-			ResultSet rs = statement.executeQuery(query);
-			while (rs.next()) {
-				String c = rs.getString("COFFEE_NAME");
-				int s = rs.getInt("WEEKLY_SALES");
-				int t = rs.getInt("TOTAL_SALES");
-				System.out.println(c + " " + s + " " + t);
+			String query = "select * from "+ tableName;
+			
+			try(Statement statement = connection.createStatement();
+					ResultSet rs = statement.executeQuery(query);){
+				while (rs.next()) {
+					String c = rs.getString("COFFEE_NAME");
+					int s = rs.getInt("WEEKLY_SALES");
+					int t = rs.getInt("TOTAL_SALES");
+					System.out.println(c + " " + s + " " + t);
+				}
+			}catch(Exception e) {
+				System.out.println(e);
 			}
-			statement.close();
 			connection.close();
 		} catch (SQLException exception) {
 			System.out.println("SQLException: " + exception.getMessage());
@@ -83,11 +84,13 @@ public class exercise2 {
 				try {
 					System.out.println("Transaction is being rolled back");
 					connection.rollback();
+					connection.close();
 				} catch (SQLException sqlException) {
 					System.out.print("SQLException: ");
 					System.out.println(sqlException.getMessage());
 				}
 			}
 		}
+		
 	}
 }

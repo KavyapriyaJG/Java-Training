@@ -11,8 +11,6 @@ import java.sql.Statement;
  */
 
 public class MakeConnection {
-	Connection connection;
-	Statement statement;
 	ResultSet resultSet;
 	String tableName = "employee";
 	
@@ -26,14 +24,15 @@ public class MakeConnection {
 	MakeConnection() {
 		try {
 			//Driver class loaded
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			
-			//Connected to database
-			connection = DriverManager.getConnection("jdbc:mysql://localhost/acedb", "root", "1234567890");
-			
-			//Statement created
-			statement = connection.createStatement();
-			
+			Class.forName("com.mysql.cj.jdbc.Driver");	
+		}catch (java.lang.ClassNotFoundException e) {
+			System.out.print("ClassNotFoundException: ");
+			System.out.println(e.getMessage());
+		}
+		
+		try(Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/acedb", "root", "1234567890"); 
+			Statement statement = connection.createStatement();){
+		
 			//Inserting records to the table
 			statement.executeUpdate("insert into "+ tableName +" values (2306,'kavya', 'dev', 1)");
 			statement.executeUpdate("insert into "+ tableName +" values (2309,'priya', 'QA', 10)");
@@ -45,10 +44,8 @@ public class MakeConnection {
 			//Table with contents printed on Console
 			while (resultSet.next())
 				System.out.println(resultSet.getInt(1) + " " + resultSet.getString(2) +" " +resultSet.getString(3) + " " + resultSet.getInt(4));
-			
-			//Connection closed
-			connection.close();
-		} catch (Exception e) {
+		
+		}catch (Exception e) {
 			System.out.println(e);
 		}
 		
